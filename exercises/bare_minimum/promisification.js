@@ -89,7 +89,14 @@ var readFileAndMakeItFunny = function (filePath, callback) {
  });
 };
 
-var readFileAndMakeItFunnyAsync = Promise.promisifyAll(readFileAndMakeItFunny);
+var readFileAndMakeItFunnyAsync = function(filepath){
+  return new Promise(function(resolve,reject){
+    readFileAndMakeItFunny(filepath,function(data){
+      if(data instanceof Error){reject(data)}
+      else{resolve(data)}
+    })
+  });
+};
 
 // Export these functions so we can unit test them
 // and reuse them in later code ;)
